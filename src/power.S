@@ -5,7 +5,8 @@
   prompt_len = . - prompt
   result_msg:  .ascii "Power is: "
   result_len = . - result_msg
-  
+  overflow:  .ascii "Overflow (mod 2^64)\n"
+  overflow_len = . - overflow 
 
 .section .text 
   .global power
@@ -28,10 +29,17 @@ power:
   jz power_done
 power_loop:
   imulq %r12, %rax
+  jno no_overflow
+  push %rax
+  lea overflow(%rip), %rsi
+  mov $overflow_len, %rdx
+  call print
+  pop %rax
+no_overflow:
   decq %r13
   jnz power_loop
+  
 power_done:
- 
   push %rax
   lea result_msg(%rip), %rsi
   mov $result_len, %rdx
