@@ -20,25 +20,25 @@ palindrome:
 
   xor %rcx, %rcx 
   movq $10, %rbx
-reverse_loop:
+.reverse_loop:
   cmpq $0, %rax    
-  je compare 
+  je .compare 
   xorq %rdx, %rdx        
   divq %rbx            
   imulq $10, %rcx      
   addq %rdx, %rcx       
-  jmp reverse_loop
+  jmp .reverse_loop
 
-compare:
+.compare:
   cmpq %r12, %rcx      
-  je pass 
-fail:
+  je .pass 
+.fail:
   lea fail_msg(%rip), %rsi
   mov $fail_msg_len, %rdx
   call print
   ret
 
-pass:
+.pass:
   lea pass_msg(%rip), %rsi
   mov $pass_msg_len, %rdx
   call print

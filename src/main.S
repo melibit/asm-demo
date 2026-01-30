@@ -24,13 +24,14 @@
 
 .section .text
   .global _start
+  .global exit
 
 _start:
   lea msg(%rip), %rsi
   mov $msg_len, %rdx
   call print
 
-loop:
+.loop:
   lea options_msg(%rip), %rsi
   mov $options_len, %rdx
   call print 
@@ -40,42 +41,42 @@ loop:
   je exit
 
   cmpq $1, %rax
-  je ex_max
+  je .ex_max
 
   cmpq $2, %rax
-  je ex_power 
+  je .ex_power 
 
   cmpq $3, %rax
-  je ex_palindrome
+  je .ex_palindrome
  
   lea fail_msg(%rip), %rsi
   mov $fail_msg_len, %rdx
   call print
 
-  jmp loop
+  jmp .loop
 
-ex_max:
+.ex_max:
   lea max_msg(%rip), %rsi
   mov $max_msg_len, %rdx
   call print
   call max 
-  jmp loop
+  jmp .loop
 
-ex_power:
+.ex_power:
   lea power_msg(%rip), %rsi
   mov $power_msg_len, %rdx
   call print
   call power
-  jmp loop
+  jmp .loop
 
-ex_palindrome:
+.ex_palindrome:
   lea palindrome_msg(%rip), %rsi
   mov $palindrome_msg_len, %rdx
   call print
   call palindrome 
-  jmp loop
+  jmp .loop
   
- exit:
+exit:
   lea exit_msg(%rip), %rsi
   mov $exit_len, %rdx
   call print

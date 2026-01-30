@@ -26,8 +26,8 @@ power:
 
   movq $1, %rax 
   testq %r13, %r13
-  jz power_done
-power_loop:
+  jz .power_done
+.power_loop:
   imulq %r12, %rax
   jno no_overflow
   push %rax
@@ -37,9 +37,9 @@ power_loop:
   pop %rax
 no_overflow:
   decq %r13
-  jnz power_loop
+  jnz .power_loop
   
-power_done:
+.power_done:
   push %rax
   lea result_msg(%rip), %rsi
   mov $result_len, %rdx
