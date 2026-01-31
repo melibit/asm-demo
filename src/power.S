@@ -5,7 +5,7 @@
   prompt_len = . - prompt
   result_msg:  .ascii "Power is: "
   result_len = . - result_msg
-  overflow:  .ascii "Overflow (mod 2^64)\n"
+  overflow:  .ascii "Overflow (in 64 bits)\n"
   overflow_len = . - overflow 
 
 .section .text 
