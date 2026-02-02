@@ -4,7 +4,7 @@
   msg: .ascii "Assembly Experiments: (x86_64, linux)\n"
   msg_len = . - msg
 
-  options_msg: .ascii "\nSelect Experiment:\n[0] exit\n[1] max.S\n[2] power.S\n[3] palindrome.S\nEnter number: "
+  options_msg: .ascii "\nSelect Experiment:\n[0] exit\n[1] max.S\n[2] power.S\n[3] palindrome.S\n[4] prime.S\nEnter number: "
   options_len = . - options_msg
 
   max_msg: .ascii "\nmax.S:\n"
@@ -16,6 +16,9 @@
   palindrome_msg: .ascii "\npalindrome.S:\n"
   palindrome_msg_len = . - palindrome_msg 
   
+  prime_msg: .ascii "\nprime.S:\n"
+  prime_msg_len = . - prime_msg
+
   fail_msg: .ascii "\nInvalid input\n"
   fail_msg_len = . - fail_msg
 
@@ -48,7 +51,10 @@ _start:
 
   cmpq $3, %rax
   je .ex_palindrome
- 
+  
+  cmpq $4, %rax
+  je .ex_prime
+
   lea fail_msg(%rip), %rsi
   mov $fail_msg_len, %rdx
   call print
@@ -74,6 +80,13 @@ _start:
   mov $palindrome_msg_len, %rdx
   call print
   call palindrome 
+  jmp .loop
+
+.ex_prime:
+  lea prime_msg(%rip), %rsi
+  mov $prime_msg_len, %rdx
+  call print
+  call prime
   jmp .loop
   
 exit:
