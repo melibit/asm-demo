@@ -10,7 +10,6 @@
   .global max
 
 max:
-  # Get Number 1
   lea prompt(%rip), %rsi
   mov $prompt_len, %rdx
   call print
